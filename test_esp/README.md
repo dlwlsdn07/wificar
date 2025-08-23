@@ -1,16 +1,41 @@
-# test_esp
+# ESP32 로봇 자동차 제어 Flutter 앱
 
-A new Flutter project.
+이 프로젝트는 Flutter를 사용하여 ESP32 기반의 로봇 자동차를 제어하는 크로스플랫폼(Android, iOS, Web) 애플리케이션입니다. ESP32-CAM의 실시간 영상 스트리밍을 배경으로, 사용자는 화면에 오버레이된 UI를 통해 직관적으로 로봇을 조종할 수 있습니다.
 
-## Getting Started
+## 주요 목표 및 기능
 
-This project is a starting point for a Flutter application.
+이 프로젝트의 핵심 목표는 사용자와 로봇 간의 상호작용을 명확하고 즐겁게 만드는 것입니다.
 
-A few resources to get you started if this is your first Flutter project:
+- **실시간 영상 스트리밍:** ESP32-CAM이 촬영하는 영상을 앱 화면 전체에 실시간으로 표시하여, 마치 로봇에 탑승한 듯한 1인칭 시점(FPV)을 제공합니다.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **직관적인 원격 제어:**
+  - **모바일:** 터치와 드래그를 이용한 스티어링 핸들과 가속/감속 버튼으로 쉽게 조종할 수 있습니다.
+  - **웹:** 키보드(W, A, S, D 및 방향키)를 사용하여 정밀한 제어가 가능합니다.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **연결 상태 시각적 피드백 (웰컴 액션):**
+  > **앱이 로봇 자동차와 성공적으로 연결되면, 로봇의 내장 LED가 여러 번 반짝이며 사용자에게 연결이 완료되었음을 알리는 '웰컴 액션'을 보여줍니다.** 이는 사용자가 제어를 시작하기 전에 시스템이 준비되었음을 시각적으로 명확하게 인지할 수 있도록 돕습니다.
+
+## 시스템 구성
+
+- **클라이언트 (App):**
+  - **프레임워크:** Flutter
+  - **역할:**
+    - 사용자로부터 제어 입력을 받습니다. (터치, 키보드)
+    - 제어 명령을 HTTP GET 요청으로 변환하여 ESP32에 전송합니다. (`/action?go=...`)
+    - ESP32로부터 MJPEG 비디오 스트림을 수신하여 화면에 표시합니다. (`http://<ESP32_IP>:81/stream`)
+
+- **서버 (Robot):**
+  - **MCU:** ESP32-CAM
+  - **역할:**
+    - WiFi에 연결하여 웹 서버를 실행합니다.
+    - 앱으로부터 수신한 HTTP 요청을 파싱하여 DC 모터를 제어합니다. (전진, 후진, 좌회전, 우회전, 정지)
+    - 카메라 모듈의 영상을 MJPEG 형식으로 스트리밍합니다.
+    - **(웰컴 액션 구현)** 앱으로부터 첫 제어 신호를 수신했을 때, 내장 LED를 점멸시켜 연결 성공을 알립니다.
+
+## 시작하기
+
+1.  **하드웨어 준비:** ESP32-CAM, 모터 드라이버(L298N 등), DC 모터 2개, 로봇 섀시를 준비합니다.
+2.  **ESP32 펌웨어:** 제공되는 아두이노 스케치 코드를 ESP32에 업로드합니다. (코드 내 WiFi SSID와 비밀번호를 수정해야 합니다.)
+3.  **Flutter 앱 실행:**
+    - `lib/main.dart` 파일 상단의 `esp32Ip` 변수에 자신의 ESP32 IP 주소를 입력합니다.
+    - 앱을 실행하여 로봇 제어를 시작합니다.

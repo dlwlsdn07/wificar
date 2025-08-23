@@ -24,3 +24,10 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/icon.svg
+    - assets/images/background.svg
+    - assets/images/button.svg
+    - assets/images/joystick_base.svg
+    - assets/images/accel.png
+    - assets/images/brake.png

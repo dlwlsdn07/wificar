@@ -1,0 +1,26 @@
+name: test_esp
+description: "A new Flutter project for robot control."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.5.1
+  flutter_joystick: ^0.0.3
+  web_socket_channel: ^2.4.0
+  multicast_dns: ^0.3.2+4
+  http: ^1.2.1
+  # webview_flutter는 MJPEG 스트림을 Image.network로 직접 처리하므로 제외합니다.
+  # 만약 웹뷰가 꼭 필요하다면 다시 추가할 수 있습니다.
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true

@@ -15,8 +15,8 @@
 #include "esp_http_server.h"   // ESP32 HTTP server library, used to handle Web requests
 
 // Replace with your network credentials
-const char *ssid = "Jinwoo iPhone";        // Set to your Wi-Fi name
-const char *password = "12121212";   // Set to your Wi-Fi passwords
+const char *ssid = "jinwoo";        // Set to your Wi-Fi name
+const char *password = "1q2w3e4r!@";   // Set to your Wi-Fi passwords
 
 //Set camera pins
 #define PWDN_GPIO_NUM 32
